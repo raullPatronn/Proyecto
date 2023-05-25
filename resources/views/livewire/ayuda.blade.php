@@ -1,33 +1,38 @@
-<div class="bg-gradient-to-b from-blue-200 to-rose-200 min-h-screen">
-    <br>
-    <div class="text-center">
+<div class=" mx-auto px-4 sm:px-6 lg:px-8 py-16 mb-24">
+    <div class="text-center mt-4">
         <h1 class="text-3xl font-bold bg-clip-text text-black font-serif italic" style="font-family: 'Playfair Display', serif;">Mis solicitudes de ayuda</h1>
     </div>
-    <br>
-    <!--- Boton Agregar--->
-    <div class="relative">
-       <button class="bg-white rounded-r-lg shadow-lg flex items-center justify-center h-12 w-12 hover:bg-indigo-700 transition duration-300 ease-in-out" wire:click="toggleModal">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-indigo-500">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-    </svg>
-        </button>
+    <br>   
+    <livewire:btn-regresar />
+       <!--- Boton Agregar--->
+    <div class="flex items-center mx-8 mt-8">
+    <button wire:click="toggleModal">
+    <livewire:btn-agregar />
+    </button>
     </div>
     <!--- Fonde de Corcho y el card que aparece en el fondo--->
-      <div class=" mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class=" mx-auto px-4 lg:px-8 py-16 mb-4">
         @if($solicitudes->isEmpty())
             <div class="flex items-center text-center align-center justify-center h-full">
-                <div class="block">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 text-gray-400">
+            <div class="block">
+            <div class="ml-20">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 text-gray-400">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0012.016 15a4.486 4.486 0 00-3.198 1.318M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
             </svg>
+            </div>
                 <p class="text-gray-400 text-lg">Aún no has solicitado una petición.</p>
             </div>
             </div>
         @else
         <!--- Card --->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-10 translate-y-12">
           @foreach($solicitudes as $solicitud)
-            <div class="bg-white rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
+            <div class="bg-white rounded-lg overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl sm:w-full md:w-full xl:w-full">
+          <div class="bg-violet-400 p-4 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <circle cx="10" cy="10" r="10"/>
+            </svg>
+          </div>
             <div class="p-6">
                 @if($editarId == $solicitud->id)
                     <input type="text" id="titulo" name="titulo" wire:model="titulo" placeholder="Título" class="w-full mb-2 text-gray-700 font-bold text-2xl">
@@ -39,23 +44,14 @@
                     </select>
                     <div class="flex justify-end">
                     <button wire:click="actualizarSolicitud({{ $solicitud->id }})"
-                class="text-green-500 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-green-700"
-                onclick="event.preventDefault();
-                    var form = document.getElementById('actualizar-solicitud-form');
-                swal({
-                     buttons: false,
-                     title: '¡Solicitud actualizada!',
-                     text: '        ',
-                     icon: 'success',
-                     timer: 1000,
-                   })">
+                class="text-green-500 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-green-700">
                     Guardar
                     </button>
                 <button wire:click="cancelarEdicion()" class="text-gray-500 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-gray-700">Cancelar</button>
                 </div>
             @else
-          <div class="font-bold text-xl mb-2 text-center">{{ $solicitud->titulo }}</div>
-          <p class="text-gray-700 text-base mb-2 text-center">{{ $solicitud->descripcion }}</p>
+          <div class="font-bold text-xl mb-2">{{ $solicitud->titulo }}</div>
+          <p class="text-gray-700 text-base mb-2">{{ $solicitud->descripcion }}</p>
           <p class="text-gray-700 text-base text-violet-700 mb-2"><strong>Ayuda Preferible:</strong> {{ $solicitud->ayuda }}</p>
             <div class="flex justify-end">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer mr-2" wire:click="editarSolicitud({{ $solicitud->id }})">
@@ -66,16 +62,16 @@
             </svg>
             </div>
         @endif
-      </div>
-      <div class="px-6 py-2">
-        <div class="flex justify-between items-center text-gray-500 text-xs">
-          <span>{{ $solicitud->created_at->diffForHumans() }}</span>
-          <span>{{ $solicitud->usuario->name }}</span>
-        </div>
-      </div>
-    </div>
-                @endforeach
+          </div>
+          <div class="px-6 py-2">
+            <div class="flex justify-between items-center text-gray-500 text-xs">
+              <span>{{ $solicitud->created_at->diffForHumans() }}</span>
+              <span>{{ $solicitud->usuario->name }}</span>
             </div>
+          </div>
+        </div>
+         @endforeach
+    </div>
             @endif        
         </div>
     <!--- Modal de la solicitud--->
@@ -86,7 +82,6 @@
             </div>
      <div class="fixed z-10 inset-0 overflow-y-auto animate__animated animate__bounceInDown">
         <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-           
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
             <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 transform transition duration-500 ease-in-out scale-100 hover:scale-110">
                     <div class="text-center">
@@ -101,22 +96,14 @@
                                     Título:
                                 </label>
                                 <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('titulo') border-red-500 @enderror" id="titulo" wire:model="titulo" autofocus>
-                                @error('titulo')
-                                    <script>
-                                        swal("Error!", "Existen Campos Vacíos", "error");
-                                    </script>
-                                @enderror
+                                
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-bold mb-2" for="descripcion">
                                     Descripción:
                                 </label>
                                 <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('descripcion') border-red-500 @enderror" id="descripcion" rows="5" wire:model="descripcion"></textarea>
-                                @error('descripcion')
-                                    <script>
-                                        swal("Error!", "Existen Campos Vacíos", "error");
-                                    </script>
-                                @enderror
+                               
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-bold mb-2" for="ayuda">
@@ -127,11 +114,7 @@
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                 </select>
-                                @error('ayuda')
-                                    <script>
-                                        swal("Error!", "Existen Campos Vacíos", "error");
-                                    </script>
-                                @enderror
+                                
                             </div>
                             <div class="flex justify-end">
                                 <button class="text-indigo-600 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-indigo-700" type="submit" >
@@ -141,15 +124,11 @@
                                 <button class="text-gray-500 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-gray-700" type="button" wire:click="cerrarModal">Cerrar</button>
                             </div>
                         </form>
-                                </div>
-
+                    </div>
                         </div>
                     </div>
-
                 </div>
-
             @endif
-
         </div>
         <!---Modal Eliminar ---> 
     @foreach ($solicitudes as $solicitud)
@@ -179,28 +158,5 @@
     @endif
     @endforeach
 </div>
-   <!--- Pie de página--->
-<footer class="bg-gray-800 text-white py-4 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row justify-between items-center">
-      <ul class="flex justify-center sm:justify-start">
-        <li class="mr-6">
-          <a href="#" class="hover:text-indigo-500 transition-colors duration-300">Facebook</a>
-        </li>
-        <li class="mr-6">
-          <a href="#" class="hover:text-indigo-500 transition-colors duration-300">Twitter</a>
-        </li>
-        <li class="mr-6">
-          <a href="#" class="hover:text-indigo-500 transition-colors duration-300">Instagram</a>
-        </li>
-        <li>
-          <a href="#" class="hover:text-indigo-500 transition-colors duration-300">LinkedIn</a>
-        </li>
-      </ul>
-      <p class="text-xs text-gray-400 sm:ml-6 mt-4 sm:mt-0">&copy; 2023 Nombre de la Empresa. Todos los derechos reservados.</p>
-    </div>
-  </div>
-</footer>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />

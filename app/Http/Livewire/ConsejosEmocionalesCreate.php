@@ -7,11 +7,14 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 class ConsejosEmocionalesCreate extends Component
 {
+    use LivewireAlert;
     public $openModal = false;
     public $abrir = false;
     public $conf = false;
+    public $adminModal = false;
     public $titulo;
     public $descripcion;
     public $limite = 100;
@@ -39,7 +42,7 @@ class ConsejosEmocionalesCreate extends Component
         $this->titulo = '';
         $this->descripcion = '';
         $this->openModal = false;
-        
+        $this->alert('success', 'Solicitud creada',['timer' => 1500,]); 
     }
 
     public function abrirse($id)
@@ -82,6 +85,11 @@ public function cambiarOrden()
     $this->conf = true;
     $this->consejoEliminar = $id;
 }
+ public function confirmEliminar($id)
+{
+    $this->adminModal = true;
+    $this->consejoEliminar = $id;
+}
 
 public function eliminar()
 {
@@ -94,15 +102,29 @@ public function eliminar()
     // Cerrar el modal de confirmación
     $this->conf = false;
     $this->cerrar();
+    $this->alert('warning', 'Elemento eliminado',['timer' => 1500,]);
 }
+public function eliminartodo()
+{
+    $consejoEmocional = ConsejoEmocional::find($this->consejoEliminar);
+
+    if ($consejoEmocional) {
+        $consejoEmocional->delete();
+    }
+
+    // Cerrar el modal de confirmación
+    $this->conf = false;
+    $this->cerrar();
+    $this->alert('warning', 'Elemento eliminado', ['timer' => 1500]);
+}
+
 public function cancelarEliminar()
 {
     // Cerrar el modal de confirmación
     $this->conf = false;
     $this->cerrar();
 }
-
- use WithPagination;
+use WithPagination;
     public function render()
     {
         $consejos = ConsejoEmocional::orderBy('created_at', $this->orden)->paginate(6);

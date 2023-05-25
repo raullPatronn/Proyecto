@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'animate.css';
 [x-cloak] {
     display: none;
+}
+
+/* Transición de desvanecimiento */
+.transition-opacity {
+  transition-property: opacity;
+  transition-duration: 0.5s;
 }

@@ -1,5 +1,5 @@
-<script src="https://cdn.tailwindcss.com"></script>
-<nav x-data="{ open: false }" class="bg-gradient-to-b from-emerald-200 to-blue-200 ">
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+<nav x-data="{ open: false }" class="bg-slate-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -29,7 +29,7 @@
                         <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                       </button>
                     @else
-                      <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-purple-500 hover:text-black focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                      <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-full text-white bg-red-400 hover:text-black hover:bg-red-300 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                         {{ Auth::user()->name }}
                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -62,11 +62,9 @@
                 </x-dropdown>
               </div>
             </div>
-
-
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center bg-indigo-500 justify-center p-2 rounded-md text-black hover:text-white-500 hover:bg-white-100 focus:outline-none focus:bg-white-100 focus:text-white-500 transition duration-150 ease-in-out text-white">
+                <button @click="open = ! open" class="inline-flex items-center bg-red-400 justify-center p-2 rounded-md text-black hover:text-white-500 hover:bg-white-100 focus:outline-none focus:bg-white-100 focus:text-white-500 transition duration-150 ease-in-out text-white">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
