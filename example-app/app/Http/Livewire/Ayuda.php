@@ -36,7 +36,15 @@ class Ayuda extends Component
     }
     public function crearSolicitud()
     {
-        $this->validate();
+        $this->validate([
+        'titulo' => 'required',
+        'descripcion' => 'required',
+        'ayuda' => 'required',
+        ], [
+            'titulo.required' => 'El título está vacío',
+            'descripcion.required' => 'La descripción está vacía',
+            'ayuda.required' => 'Selecciona uno',
+        ]);
 
         if (empty($this->titulo) || empty($this->descripcion) || empty($this->ayuda)) {
         $this->alert('success', 'Por favor, completa todos los campos.');

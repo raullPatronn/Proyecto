@@ -136,46 +136,46 @@
                             <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
                         </div>
                 <div class="animate__animated animate__flipInX">
-                 <div class=" bg-white rounded-lg shadow-xl p-8 transform transition duration-500 ease-in-out scale-100 hover:scale-110 ">
-                <h3 class="text-xl leading-6 font-medium text-gray-900 mb-4">
-                    ¿Deseas Brindar un Consejo?
-                </h3>
-                <form wire:submit.prevent="guardar">
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-bold mb-2" for="titulo">
-                            Título
-                        </label>
-                        <input
-                            class="appearance-none border rounded w-full py-2 px-3 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('titulo') border-red-500 @enderror"
-                            id="titulo"
-                            type="text"
-                            wire:model.lazy="titulo">
+                 <div class="bg-white rounded-lg shadow-xl p-8 transform transition duration-500 ease-in-out scale-100 hover:scale-110">
+                        <h3 class="text-2xl font-medium text-gray-900 mb-4">
+                            ¿Deseas Brindar un Consejo?
+                        </h3>
+                        <form wire:submit.prevent="guardar">
+                            <div class="mb-8">
+                                <label class="block text-gray-700 font-bold mb-2" for="titulo">
+                                    Título
+                                </label>
+                                <input class="appearance-none bg-white border border-gray-300 rounded w-full py-2 px-3 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('titulo') border-red-500 @enderror"
+                                    id="titulo"
+                                    type="text"
+                                    wire:model.lazy="titulo"
+                                    placeholder="Ingrese el título">
+                                @error('titulo') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-8">
+                                <label class="block text-gray-700 font-bold mb-2" for="descripcion">
+                                    Descripción
+                                </label>
+                                <textarea class="appearance-none bg-white border border-gray-300 rounded w-full py-2 px-3 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('descripcion') border-red-500 @enderror"
+                                    id="descripcion"
+                                    wire:model.lazy="descripcion"
+                                    placeholder="Ingrese la descripción"></textarea>
+                                @error('descripcion') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="flex items-center justify-end mt-8">
+                                <button class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    type="submit">
+                                    Guardar
+                                </button>
+                                <button class="text-gray-500 font-bold ml-4 hover:text-gray-700 focus:outline-none focus:shadow-outline"
+                                    wire:click="cerrarModal"
+                                    type="button">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 font-bold mb-2" for="descripcion">
-                            Descripción
-                        </label>
-                        <textarea
-                            class="appearance-none border rounded w-full py-2 px-3 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('descripcion') border-red-500 @enderror"
-                            id="descripcion"
-                            wire:model.lazy="descripcion"></textarea>
-                    </div>
-                    <div class="flex items-center justify-end mt-8">
-                        <button
-                            class="text-indigo-600 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-indigo-700"
-                            type="submit">
-                            Guardar
-                        </button>
-                        <button 
-                            class="text-gray-500 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-gray-700" 
-                            wire:click="cerrarModal" 
-                            type="button"
-                        >
-                            Cancelar
-                        </button>
-                    </div>
-                </form>
-                    </div>
+
                 </div>
                     </div>
                 </div> 

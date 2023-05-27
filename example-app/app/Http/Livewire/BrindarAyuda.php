@@ -23,6 +23,7 @@ class BrindarAyuda extends Component
     public $chatStarted = false;
     public $showModal = false;
     public $chatOpened = false;
+    
     public function rules()
     {
         return [

@@ -96,14 +96,14 @@
                                     Título:
                                 </label>
                                 <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('titulo') border-red-500 @enderror" id="titulo" wire:model="titulo" autofocus>
-                                
+                                @error('titulo') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-bold mb-2" for="descripcion">
                                     Descripción:
                                 </label>
                                 <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('descripcion') border-red-500 @enderror" id="descripcion" rows="5" wire:model="descripcion"></textarea>
-                               
+                               @error('descripcion') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 font-bold mb-2" for="ayuda">
@@ -114,7 +114,7 @@
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                 </select>
-                                
+                                @error('ayuda') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
                             <div class="flex justify-end">
                                 <button class="text-indigo-600 font-bold mr-2 focus:outline-none focus:shadow-outline hover:text-indigo-700" type="submit" >

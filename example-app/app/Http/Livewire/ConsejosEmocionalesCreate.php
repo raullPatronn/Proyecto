@@ -21,6 +21,13 @@ class ConsejosEmocionalesCreate extends Component
     public $mostrarModal = false;
     public $consejoSeleccionado;
     public $orden = 'desc'; // Dec
+    public function rules()
+    {
+        return [
+            'titulo' => 'required',
+            'descripcion' => 'required',
+        ];
+    }
 
 
 
@@ -31,14 +38,20 @@ class ConsejosEmocionalesCreate extends Component
 
     public function guardar()
     {
-        $this->validate();
+        $this->validate([
+    'titulo' => 'required',
+    'descripcion' => 'required',
+    ], [
+        'titulo.required' => 'El título está vacío',
+        'descripcion.required' => 'La descripción está vacía',
+    ]);
 
         ConsejoEmocional::create([
             'titulo' => $this->titulo,
             'descripcion' => $this->descripcion,
             'user_id' => Auth::id(),
         ]);
-
+        
         $this->titulo = '';
         $this->descripcion = '';
         $this->openModal = false;
