@@ -2,8 +2,35 @@
 
 <div class="flex justify-between mt-8">
     <div class="w-2/4 block">
-        <h1 class="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
+        <h1 class="text-2xl font-bold mb-2">Lista de Solicitudes</h1>
         <br>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex justify-end">
+                    @if ($solicitudes->onFirstPage() || $chatStarted)
+                        <span class="px-3 py-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-l">
+                            &lt;
+                        </span>
+                    @else
+                        <a href="{{ $solicitudes->previousPageUrl() }}" class="px-3 py-2 bg-blue-500 text-white rounded-l hover:bg-blue-600">
+                            &lt;
+                        </a>
+                    @endif
+
+                    @if ($solicitudes->hasMorePages() && !$chatStarted)
+                        <a href="{{ $solicitudes->nextPageUrl() }}" class="px-3 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600">
+                            &gt;
+                        </a>
+                    @else
+                        <span class="px-3 py-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-r">
+                            &gt;
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+
+        </div>
         <div class="mx-auto px-2 sm:px-6 lg:px-8 py-16 mb-40 mr-4">
             <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 @foreach($solicitudes as $solicitud)
@@ -13,9 +40,11 @@
                             <p class="text-gray-700 mb-2">{{ $solicitud->descripcion }}</p>
                             <p class="text-violet-700 text-base mb-4"><strong>Ayuda Preferible:</strong> {{ $solicitud->ayuda }}</p>
                             <p class="text-gray-500 text-sm">{{ $solicitud->created_at->diffForHumans() }}</p>
-                            <button wire:click="startChatWithOwner({{ $solicitud->id }})">Iniciar Chat</button>
-
-
+                            <form wire:submit.prevent="startChatWithOwner({{ $solicitud->id }})">
+                                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    Iniciar Chat
+                                </button>
+                            </form>
                         </div>
                         <div class="px-6 py-2 flex justify-between items-center text-gray-500 text-xs">
                             <span>{{ $solicitud->usuario->name }}</span>
@@ -53,7 +82,7 @@
                 </form>
             </div>
         @else
-            <p class="text-gray-500">Selecciona un usuario para ver los mensajes.</p>
+            <p class="text-gray-500">Selecciona una peticion para empezar un chat.</p>
         @endif
     </div>
 </div>

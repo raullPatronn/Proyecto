@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Session;
 class BrindarAyuda extends Component
 {
     use WithPagination;
+
     public $users;
     public $Modal = false;
     public $messages = [];
     public $selectedUser;
     public $newMessage;
+    public $chatStarted = false;
 
     public function mount()
     {
@@ -35,16 +37,16 @@ class BrindarAyuda extends Component
 
         $this->loadMessages();
     }
+
     public function loadMessages()
     {
         $this->messages = Message::where(function ($query) {
-        $query->where('sender_id', auth()->id())
-            ->where('receiver_id', $this->selectedUser->id ?? null);
-    })->orWhere(function ($query) {
-        $query->where('sender_id', $this->selectedUser->id ?? null)
-            ->where('receiver_id', auth()->id());
-    })->get();
-
+            $query->where('sender_id', auth()->id())
+                ->where('receiver_id', $this->selectedUser->id ?? null);
+        })->orWhere(function ($query) {
+            $query->where('sender_id', $this->selectedUser->id ?? null)
+                ->where('receiver_id', auth()->id());
+        })->get();
     }
 
     public function startChatWithOwner($solicitudId)
@@ -53,6 +55,7 @@ class BrindarAyuda extends Component
         $owner = $solicitud->usuario;
         $this->selectedUser = $owner;
         $this->loadMessages();
+        $this->chatStarted = true;
         $this->Modal = true;
     }
 
@@ -79,7 +82,7 @@ class BrindarAyuda extends Component
     public function render()
     {
         return view('livewire.brindar-ayuda', [
-           'solicitudes' => SolicitudDeAyuda::paginate(7),
+            'solicitudes' => SolicitudDeAyuda::orderBy('created_at', 'desc')->paginate(6),
         ]);
     }
 }
