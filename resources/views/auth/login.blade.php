@@ -10,7 +10,7 @@
             </div>
         @endif
 
-       <form method="POST" action="{{ route('login') }}" class="w-full max-w-sm mx-auto bg-purple-100 rounded-md shadow-md p-6">
+       <form method="POST" action="{{ route('login') }}" class="w-full max-w-sm mx-auto bg-white rounded-md shadow-md p-6">
     @csrf
 
     <div class="mb-4">

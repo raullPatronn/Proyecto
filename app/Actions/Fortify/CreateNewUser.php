@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -28,14 +26,10 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        $uniqueId = strval(mt_rand(100000, 999999)); // Generar un número aleatorio de 6 dígitos
-
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'unique_id' => $uniqueId, // Asignar el unique_id generado al campo unique_id en la tabla users
         ]);
     }
-
 }

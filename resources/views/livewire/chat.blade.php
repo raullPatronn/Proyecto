@@ -1,58 +1,46 @@
-<div>
-
-<div class="flex justify-between mt-8">
-    <div class="w-1/4">
-        <h2 class="text-lg font-bold mb-4">Usuarios</h2>
-        <ul class="space-y-2">
-            @foreach ($users as $user)
-                <li wire:click="selectUser({{ $user->id }})" class="cursor-pointer hover:bg-gray-100 rounded p-2 flex items-center">
-                    <div class="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center text-white font-bold mr-2">{{ substr($user->name, 0, 1) }}</div>
-                    <span>{{ $user->name }}</span>
-                </li>
-            @endforeach
-        </ul>
+<div class="bg-gradient-to-b from-blue-100 to-rose-100"> 
+<div class="flex flex-col h-screen">
+    <!-- Header -->
+    <div class="bg-gray-200 py-4 px-6 flex items-center justify-between">
+        <h1 class="text-xl font-bold">Nombre del Chat</h1>
+        <span class="text-gray-600">Conectado como {{ auth()->user()->name }}</span>
     </div>
 
-    <div class="flex flex-col h-full w-3/4">
-        <h2 class="text-lg font-bold mb-4">Mensajes</h2>
-        @if ($Modal)
-            <div class="bg-gray-100 rounded-lg p-4 flex-1">
-                <div class="mb-4">
-                    Usuario actual: <strong>{{ $selectedUser->name }}</strong> 
+    <!-- Chat messages -->
+    <div class="flex-1 bg-gray-100 p-4 overflow-y-auto">
+        <div class="flex flex-col space-y-4">
+            <!-- Chat message (received) -->
+            <div class="flex items-end">
+                <div class="flex flex-col items-start max-w-xs mx-2">
+                    <div class="bg-white rounded-lg py-2 px-4 shadow-md">
+                        <p class="text-gray-800">{{ $ultimoMensaje }}</p>
+                    </div>
+                    <div class="text-gray-600 text-sm mt-1">{{ $nombreUsuario }} • {{ $hora }}</div>
                 </div>
-                <ul class="space-y-2 max-h-[500px] overflow-y-auto" id="messageContainer">
-                    <div>
-                        @foreach ($messages as $message)
-                            <div class="flex mb-4 {{ $message->isSent ? 'justify-end' : 'justify-start' }}">
-                                <div class="{{ $message->isSent ? 'bg-blue-500 text-white' : 'bg-gray-200' }} rounded-lg p-2">
-                                    {{ $message->message }}
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </ul>
-
-                <form wire:submit.prevent="sendMessage" class="mt-4">
-                    <div class="flex">
-                        <input type="text" wire:model="newMessage" placeholder="Escribe tu mensaje" class="w-full border border-gray-300 rounded-l p-2">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r">Enviar</button>
-                    </div>
-                </form>
+                <img src="https://via.placeholder.com/40" alt="Avatar" class="rounded-full h-8 w-8 mx-2">
             </div>
-        @else
-            <p class="text-gray-500">Selecciona un usuario para ver los mensajes.</p>
-        @endif
+
+            <!-- Chat message (sent) -->
+            <div class="flex items-end justify-end">
+                <img src="https://via.placeholder.com/40" alt="Avatar" class="rounded-full h-8 w-8 mx-2">
+                <div class="flex flex-col items-end max-w-xs mx-2">
+                    <div class="bg-teal-500 rounded-lg py-2 px-4 shadow-md">
+                        <p class="text-white">{{ $ultimoMensaje }}</p>
+                    </div>
+                    <div class="text-gray-600 text-sm mt-1">{{ $nombreUsuario }} • {{ $hora }}</div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Message input -->
+    <form class="bg-gray-200 py-2 px-4 flex items-center" method="POST" >
+        @csrf
+        <input type="text" name="mensaje" placeholder="Escribe tu mensaje" class="flex-1 border border-gray-400 rounded-lg py-2 px-4 mr-2">
+        <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white rounded-lg py-2 px-4">Enviar</button>
+    </form>
 </div>
+
 
 </div>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.hook('message.processed', function () {
-            var container = document.getElementById('messageContainer');
-            container.scrollTop = container.scrollHeight;
-        });
-    });
-
-</script>
