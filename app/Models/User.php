@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+  
 class User extends Authenticatable
 {
     use HasRoles;
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'unique_id',
     ];
 
     /**
@@ -59,6 +61,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
- 
+    // Relación uno a muchos con los mensajes enviados por el usuario
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 
+
+    // Relación uno a muchos con los mensajes recibidos por el usuario
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
 }

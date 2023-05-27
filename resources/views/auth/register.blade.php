@@ -6,7 +6,7 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" class="bg-purple-100 rounded-md animate_animated" style="padding: 10px;">
             @csrf
 
             <div>
@@ -28,6 +28,7 @@
                 <x-label for="password_confirmation" value="{{ __('Confirmar Contraseña') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation"  autocomplete="new-password" />
             </div>
+            
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
@@ -45,13 +46,13 @@
                     </x-label>
                 </div>
             @endif
-
+            
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('¿Tienes una cuenta?') }}
+                    {{ __('Inicia sesión aquí') }}
                 </a>
 
-                <x-button class="ml-4">
+                <x-button class="ml-4 ">
                     {{ __('Registrarse') }}
                 </x-button>
             </div>
