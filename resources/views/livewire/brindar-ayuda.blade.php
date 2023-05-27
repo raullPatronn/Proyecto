@@ -6,27 +6,7 @@
         <br>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end">
-                    @if ($solicitudes->onFirstPage() || $chatStarted)
-                        <span class="px-3 py-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-l">
-                            &lt;
-                        </span>
-                    @else
-                        <a href="{{ $solicitudes->previousPageUrl() }}" class="px-3 py-2 bg-blue-500 text-white rounded-l hover:bg-blue-600">
-                            &lt;
-                        </a>
-                    @endif
-
-                    @if ($solicitudes->hasMorePages() && !$chatStarted)
-                        <a href="{{ $solicitudes->nextPageUrl() }}" class="px-3 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600">
-                            &gt;
-                        </a>
-                    @else
-                        <span class="px-3 py-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-r">
-                            &gt;
-                        </span>
-                    @endif
-                </div>
+                {{ $solicitudes->links() }}
             </div>
 
 
@@ -55,12 +35,22 @@
         </div>
     </div>
 
-    <div class="flex flex-col h-full w-1/2">
-        <h2 class="text-lg font-bold mb-4">Mensajes</h2>
+    <div class="flex flex-col h-full w-1/2" style="padding: 10px;">
+            <div class="flex justify-between">
+                <h2 class="text-lg font-bold mb-4">Mensajes</h2>
+                @if ($Modal)
+                <button wire:click="closeChat" class="ml-auto rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition-colors duration-300 focus:outline-none p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.414 10l4.293-4.293a1 1 0 1 0-1.414-1.414L10 8.586 5.707 4.293A1 1 0 1 0 4.293 5.707L8.586 10l-4.293 4.293a1 1 0 1 0 1.414 1.414L10 11.414l4.293 4.293a1 1 0 1 0 1.414-1.414L11.414 10z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            @endif
+        </div>
+
         @if ($Modal)
             <div class="bg-gray-100 rounded-lg p-4 flex-1">
                 <div class="mb-4">
-                    Usuario actual: <strong>{{ $selectedUser->name }}</strong> 
+                    Usuario actual: <strong>{{ $selectedUser->name }}</strong>
                 </div>
                 <ul class="space-y-2 max-h-[500px] overflow-y-auto" id="messageContainer">
                     <div>
@@ -79,13 +69,23 @@
                         <input type="text" wire:model="newMessage" placeholder="Escribe tu mensaje" class="w-full border border-gray-300 rounded-l p-2">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r">Enviar</button>
                     </div>
+                    @error('newMessage') <span class="text-red-500">{{ $message }}</span> @enderror
                 </form>
             </div>
         @else
-            <p class="text-gray-500">Selecciona una peticion para empezar un chat.</p>
+            <p class="text-gray-500">Selecciona una petición para empezar un chat.</p>
         @endif
     </div>
+
 </div>
+@if ($showModal)
+    <div class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-4 rounded shadow-lg">
+            <p class="mb-4">Ya has enviado un mensaje a este usuario.</p>
+            <button wire:click="$set('showModal', false)" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Aceptar</button>
+        </div>
+    </div>
+@endif
 
 </div>
 @vite(['resources/css/app.css', 'resources/js/app.js'])

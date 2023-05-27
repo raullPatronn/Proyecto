@@ -13,6 +13,13 @@ class Chat extends Component
     public $messages = [];
     public $selectedUser;
     public $newMessage;
+    public $chatStarted = false;
+    public function rules()
+    {
+        return [
+            'newMessage' => 'required',
+        ];
+    }
 
     public function mount()
     {
@@ -43,6 +50,11 @@ class Chat extends Component
 
     public function sendMessage()
     {
+         $this->validate([
+            'newMessage' => 'required',
+        ], [
+            'newMessage.required' => 'El campo está vacío',
+        ]);
         $message = Message::create([
             'sender_id' => auth()->id(),
             'receiver_id' => $this->selectedUser->id,
@@ -59,7 +71,11 @@ class Chat extends Component
         $this->selectedUser = $this->users->firstWhere('id', $userId);
         $this->loadMessages();
     }
-    
+    public function closeChat()
+    {
+        $this->Modal = false;
+        $this->chatStarted = false;
+    }
 
     public function render()
     {

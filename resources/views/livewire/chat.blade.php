@@ -13,12 +13,22 @@
         </ul>
     </div>
 
-    <div class="flex flex-col h-full w-3/4">
-        <h2 class="text-lg font-bold mb-4">Mensajes</h2>
+    <div class="flex flex-col h-full w-1/2" style="padding: 10px;">
+            <div class="flex justify-between">
+                <h2 class="text-lg font-bold mb-4">Mensajes</h2>
+                @if ($Modal)
+                <button wire:click="closeChat" class="ml-auto rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition-colors duration-300 focus:outline-none p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.414 10l4.293-4.293a1 1 0 1 0-1.414-1.414L10 8.586 5.707 4.293A1 1 0 1 0 4.293 5.707L8.586 10l-4.293 4.293a1 1 0 1 0 1.414 1.414L10 11.414l4.293 4.293a1 1 0 1 0 1.414-1.414L11.414 10z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            @endif
+        </div>
+
         @if ($Modal)
             <div class="bg-gray-100 rounded-lg p-4 flex-1">
                 <div class="mb-4">
-                    Usuario actual: <strong>{{ $selectedUser->name }}</strong> 
+                    Usuario actual: <strong>{{ $selectedUser->name }}</strong>
                 </div>
                 <ul class="space-y-2 max-h-[500px] overflow-y-auto" id="messageContainer">
                     <div>
@@ -37,10 +47,11 @@
                         <input type="text" wire:model="newMessage" placeholder="Escribe tu mensaje" class="w-full border border-gray-300 rounded-l p-2">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r">Enviar</button>
                     </div>
+                    @error('newMessage') <span class="text-red-500">{{ $message }}</span> @enderror
                 </form>
             </div>
         @else
-            <p class="text-gray-500">Selecciona un usuario para ver los mensajes.</p>
+            <p class="text-gray-500">Selecciona una petición para empezar un chat.</p>
         @endif
     </div>
 </div>

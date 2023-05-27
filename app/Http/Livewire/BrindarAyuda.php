@@ -21,6 +21,15 @@ class BrindarAyuda extends Component
     public $selectedUser;
     public $newMessage;
     public $chatStarted = false;
+    public $showModal = false;
+    public $chatOpened = false;
+    public function rules()
+    {
+        return [
+            'newMessage' => 'required',
+        ];
+    }
+
 
     public function mount()
     {
@@ -61,6 +70,24 @@ class BrindarAyuda extends Component
 
     public function sendMessage()
     {
+        $this->validate([
+            'newMessage' => 'required',
+        ], [
+            'newMessage.required' => 'El campo está vacío',
+        ]);
+
+        // Verificar si ya existe un mensaje enviado por el usuario actual al destinatario seleccionado
+        $existingMessage = Message::where('sender_id', auth()->id())
+            ->where('receiver_id', $this->selectedUser->id)
+            ->first();
+
+        // Si ya existe un mensaje, mostrar el modal y detener el flujo
+        if ($existingMessage) {
+            $this->showModal = true;
+            return;
+        }
+
+        // Crear y guardar el nuevo mensaje
         $message = Message::create([
             'sender_id' => auth()->id(),
             'receiver_id' => $this->selectedUser->id,
@@ -71,13 +98,20 @@ class BrindarAyuda extends Component
         $this->newMessage = '';
     }
 
+
+
+
     public function selectUser($userId)
     {
         $this->Modal = true;
         $this->selectedUser = $this->users->firstWhere('id', $userId);
         $this->loadMessages();
     }
-    
+    public function closeChat()
+    {
+        $this->Modal = false;
+        $this->chatStarted = false;
+    }
 
     public function render()
     {
