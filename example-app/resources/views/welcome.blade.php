@@ -29,25 +29,25 @@
 
    <!--- Primera sección--->
 <div class="bg-sky-200  min-h-screen">
-<div class="flex items-center justify-center">
-  <div class="container mx-auto px-4 mt-8">
+<div class="flex items-center justify-center min-h-screen">
+  <div class="container mx-auto px-4 py-8">
     <div class="max-w-lg mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-8" id="word-carousel">¿No estas en tu mejor momento?</h2>
-      <p class="text-gray-900 text-xl md:text-2xl mb-12">Encuentra apoyo emocional y comparte tus experiencias con personas que comprenden tus desafíos.</p>
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold  mb-16 text-black" id="word-carousel">¿No estás en tu mejor momento?</h2>
+      <p class=" text-xl md:text-2xl mb-12 text-black">Encuentra apoyo emocional y comparte tus experiencias con personas que comprenden tus desafíos.</p>
       <div class="flex justify-center space-x-4">
         @if (Route::has('login'))
           <div class="flex flex-col space-y-4">
             @auth
-              <a href="{{ url('/dashboard') }}" class="font-semibold text-white bg-purple-700 hover:bg-purple-600 py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Continuar</a>
+              <a href="{{ url('/dashboard') }}" class="font-semibold text-black bg-purple-700 hover:bg-purple-600 py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Continuar</a>
             @else
               @if (Route::has('register'))
                 <div class="flex flex-col space-y-2 items-center">
-                  <p class="text-gray-300">¿Eres nuevo por aquí?</p>
+                  <p class=" text-black">¿Eres nuevo por aquí?</p>
                   <a href="saludo" class="font-semibold text-white bg-blue-500 hover:bg-blue-600 py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Comenzar</a>
                 </div>
               @endif
               <div class="flex flex-col space-y-2 items-center">
-                <p class="text-gray-300">¿Ya tienes una cuenta?</p>
+                <p class=" text-black">¿Ya tienes una cuenta?</p>
                 <a href="{{ route('login') }}" class="font-semibold text-white bg-blue-500 hover:bg-blue-600 py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Iniciar Sesión</a>
               </div>
             @endauth

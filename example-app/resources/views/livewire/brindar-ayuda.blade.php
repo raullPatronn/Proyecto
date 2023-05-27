@@ -34,10 +34,10 @@
     </div>
 
     <div class="flex flex-col h-full w-1/2" style="padding: 10px;">
-            <div class="flex justify-between">
-                <h2 class="text-lg font-bold mb-4">Mensajes</h2>
-                @if ($Modal)
-                <button wire:click="closeChat" class="ml-auto rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition-colors duration-300 focus:outline-none p-2">
+        <div class="flex justify-between items-center bg-gray-200 py-2 px-4 rounded-t-lg">
+            <h2 class="text-lg font-bold">Mensajes</h2>
+            @if ($Modal)
+                <button wire:click="closeChat" class="ml-auto rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors duration-300 focus:outline-none p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M11.414 10l4.293-4.293a1 1 0 1 0-1.414-1.414L10 8.586 5.707 4.293A1 1 0 1 0 4.293 5.707L8.586 10l-4.293 4.293a1 1 0 1 0 1.414 1.414L10 11.414l4.293 4.293a1 1 0 1 0 1.414-1.414L11.414 10z" clip-rule="evenodd" />
                     </svg>
@@ -46,40 +46,49 @@
         </div>
 
         @if ($Modal)
-            <div class="bg-gray-100 rounded-lg p-4 flex-1">
-                <div class="mb-4">
-                    Usuario actual: <strong>{{ $selectedUser->name }}</strong>
-                </div>
-                <ul class="space-y-2 max-h-[500px] overflow-y-auto" id="messageContainer">
-                    <div>
-                        @foreach ($messages as $message)
-                            <div class="flex mb-4 {{ $message->isSent ? 'justify-end' : 'justify-start' }}">
-                                <div class="{{ $message->isSent ? 'bg-blue-500 text-white' : 'bg-gray-200' }} rounded-lg p-2">
-                                    {{ $message->message }}
-                                </div>
-                            </div>
-                        @endforeach
+            <div class="bg-white rounded-b-lg flex flex-col justify-between h-full">
+                <div class="px-4 py-2 border-b border-gray-200">
+                    <div class="mb-2">
+                        Usuario actual: <strong>{{ $selectedUser->name }}</strong>
                     </div>
-                </ul>
+                    <ul class="space-y-2 max-h-[500px] overflow-y-auto" id="messageContainer">
+                        <div>
+                            @foreach ($messages as $message)
+                                <div class="flex mb-2">
+                                    <div class="{{ $message->isSent ? 'ml-auto bg-blue-500 text-white' : 'bg-gray-200' }} rounded-lg py-2 px-4 max-w-[75%]">
+                                        {{ $message->message }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </ul>
+                </div>
 
-                <form wire:submit.prevent="sendMessage" class="mt-4">
+                <form wire:submit.prevent="sendMessage" class="px-4 py-2 border-t border-gray-200">
                     <div class="flex">
-                        <input type="text" wire:model="newMessage" placeholder="Escribe tu mensaje" class="w-full border border-gray-300 rounded-l p-2">
+                        <input type="text" wire:model="newMessage" placeholder="Escribe tu mensaje" class="flex-grow border border-gray-300 rounded-l p-2 focus:outline-none focus:ring focus:border-blue-500">
                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r">Enviar</button>
                     </div>
                     @error('newMessage') <span class="text-red-500">{{ $message }}</span> @enderror
                 </form>
             </div>
         @else
-            <p class="text-gray-500">Selecciona una petición para empezar un chat.</p>
+            <div class="flex flex-col items-center justify-center h-full">
+                <p class="text-gray-500">Selecciona una petición para empezar un chat.</p>
+            </div>
         @endif
     </div>
 
 </div>
 @if ($showModal)
+    <div class="fixed inset-0 transition-opacity">
+        <div class="fixed inset-0 z-40 bg-black opacity-25"></div>
+    </div>
     <div class="fixed inset-0 flex items-center justify-center z-50">
         <div class="bg-white p-4 rounded shadow-lg">
-            <p class="mb-4">Ya has enviado un mensaje a este usuario.</p>
+            <p class="mb-4">Ya has enviado un mensaje a este usuario.
+            <br>
+            Revisa tus chats en el menú de inicio</p>
             <button wire:click="$set('showModal', false)" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Aceptar</button>
         </div>
     </div>

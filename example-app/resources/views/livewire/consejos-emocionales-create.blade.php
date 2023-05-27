@@ -108,21 +108,19 @@
         <div class="fixed inset-0 transition-opacity">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
-            <div wire:ignore.self class="modal fade animate__animated animate__bounceInDown" id="modal-leer-mas" tabindex="-1" role="dialog" aria-labelledby="modal-leer-mas-title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered fixed bottom-44 right-96 mr-44 transform" role="document">
+            <div wire:ignore.self class="modal fade animate__animated animate__bounceInDown absolute top-32" id="modal-leer-mas" tabindex="-1" role="dialog" aria-labelledby="modal-leer-mas-title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content bg-white rounded-lg shadow-xl p-8 w-5/6 md:max-w-2xl">
                         <div class="modal-header">
                             <h5 class="modal-title text-lg font-bold text-black mb-2" id="modal-leer-mas-title">{{ $consejoSeleccionado ? $consejoSeleccionado->titulo : '' }}</h5>
-                            <button type="button" class="close focus:outline-none" data-dismiss="modal" aria-label="Close">
-                           
-                            </button>
+                            <button type="button" class="close focus:outline-none" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p class="text-gray-700">{{ $consejoSeleccionado ? $consejoSeleccionado->descripcion : '' }}</p>
                         </div>
                         <br>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary bg-rose-400 text-white hover:bg-violet-600 text-white font-bold py-2 px-4 rounded shadow transition duration-300 transform hover:-translate-y-1 hover:scale-110 ease-out" data-dismiss="modal" wire:click="cerrar" >Cerrar</button>
+                            <button type="button" class="btn btn-secondary bg-rose-400 text-white hover:bg-violet-600 text-white font-bold py-2 px-4 rounded shadow transition duration-300 transform hover:-translate-y-1 hover:scale-110 ease-out" data-dismiss="modal" wire:click="cerrar">Cerrar</button>
                         </div>
                     </div>
                 </div>
