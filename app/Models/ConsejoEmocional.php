@@ -14,6 +14,7 @@ class ConsejoEmocional extends Model
     protected $fillable = [
         'titulo',
         'descripcion',
+        'user_id',
     ];
     
 }
